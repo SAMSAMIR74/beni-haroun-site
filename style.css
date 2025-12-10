@@ -69,7 +69,7 @@ body {
 }
 
 .btn-logout:hover {
-    background: rgba(0,0,0,0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .logo-container {
@@ -578,7 +578,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background: url('assets/barrage.jpg') no-repeat center center fixed;
+    background: url('./assets/barrage.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
