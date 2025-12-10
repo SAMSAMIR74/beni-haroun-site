@@ -1,0 +1,22 @@
+{
+  "name": "Barrage Beni Haroun - Gestion des Données",
+  "short_name": "Beni Haroun",
+  "description": "Système de gestion des données journalières du Barrage Beni Haroun",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#66B2FF",
+  "theme_color": "#1a5f7a",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "fr",
+  "dir": "ltr",
+  "scope": "/"
+}

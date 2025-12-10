@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tableau de bord pour la gestion des données journalières du Barrage Beni Haroun">
+    <meta name="keywords" content="barrage, beni haroun, données, hydraulique, algérie">
+    <meta name="author" content="Agence Nationale des Barrages et Transferts">
+    <meta name="theme-color" content="#1a5f7a">
+    <title>Données Journalières - Barrage Beni Haroun</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Header -->
+        <header class="main-header">
+            <div class="logo-container">
+                <img src="assets/algerie.png" alt="République Algérienne" class="logo-img">
+            </div>
+            <div class="header-title">
+                <h2>République Algérienne Démocratique et Populaire</h2>
+                <h1>Ministère de l'Hydraulique</h1>
+                <h3>Agence Nationale des Barrages et Transferts</h3>
+                <h4>Barrage Beni Haroun</h4>
+            </div>
+            <div class="logo-container">
+                <img src="assets/anbt.png" alt="ANBT" class="logo-img">
+            </div>
+            <button onclick="logout()" class="btn-logout" title="Déconnexion">
+                🔓
+            </button>
+        </header>
+
+        <!-- Data Entry Form -->
+        <div class="content-box">
+            <div class="box-header">
+                <h2><span class="icon">📝</span> Saisie des Données Journalières</h2>
+            </div>
+            <form id="dataEntryForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cote">Cote (m)</label>
+                        <input type="number" id="cote" name="cote" step="any" required placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="vdf">VDF (Hm³)</label>
+                        <input type="number" id="vdf" name="vdf" step="any" value="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="dvr">DVR (Hm³)</label>
+                        <input type="number" id="dvr" name="dvr" step="any" value="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="fuites">Fuites (Hm³)</label>
+                        <input type="number" id="fuites" name="fuites" step="any" value="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="transfert">Transfert (Hm³)</label>
+                        <input type="number" id="transfert" name="transfert" step="any" value="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="pluie">Pluie (mm)</label>
+                        <input type="number" id="pluie" name="pluie" step="any" value="0" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="lectureBac">Lecture Bac (mm)</label>
+                        <input type="number" id="lectureBac" name="lectureBac" step="any" value="0" placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- Form Buttons -->
+                <div class="form-buttons" style="display: flex; gap: 10px; justify-content: center; margin: 20px 0;">
+                    <button type="submit" class="btn btn-primary" style="min-width: 150px;">
+                        💾 Enregistrer
+                    </button>
+                    <button type="reset" class="btn btn-secondary" style="min-width: 150px;">
+                        🔄 Annuler
+                    </button>
+                </div>
+
+                <div class="form-grid">
+                    <div class="search-grid">
+                        <div class="search-card">
+                            <h3>Par Date</h3>
+                            <div class="input-group">
+                                <input type="date" id="searchDate">
+                                <button class="btn btn-secondary" onclick="searchByDate()">Rechercher</button>
+                            </div>
+                        </div>
+                        <div class="search-card">
+                            <h3>Par Mois</h3>
+                            <div class="input-group">
+                                <input type="month" id="searchMonth">
+                                <button class="btn btn-secondary" onclick="searchByMonth()">Rechercher</button>
+                            </div>
+                        </div>
+                        <div class="search-card">
+                            <h3>Par Période</h3>
+                            <div class="input-group">
+                                <input type="date" id="startDate">
+                                <span class="separator">au</span>
+                                <input type="date" id="endDate">
+                                <button class="btn btn-secondary" onclick="searchByPeriod()">Rechercher</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reset-container text-center hidden" id="resetSearchContainer">
+                        <button id="resetSearchBtn" class="btn btn-outline" onclick="resetSearch()">
+                            🔄 Afficher Tout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="content-box transparent-box">
+                    <div class="action-buttons">
+                        <button class="btn btn-action btn-print" onclick="openPrintPreview()">
+                            <span class="icon">📄</span> Imprimer
+                        </button>
+                        <button class="btn btn-action btn-excel" onclick="exportToExcel()">
+                            <span class="icon">📊</span> Excel
+                        </button>
+                        <button class="btn btn-action btn-whatsapp" onclick="shareWhatsApp()">
+                            <span class="icon">📱</span> WhatsApp
+                        </button>
+                        <button class="btn btn-action btn-email" onclick="shareEmail()">
+                            <span class="icon">📧</span> Email
+                        </button>
+                        <button class="btn btn-action btn-sms" onclick="shareSMS()">
+                            <span class="icon">💬</span> SMS
+                        </button>
+                        <button class="btn btn-action btn-copy" onclick="copyReport()">
+                            <span class="icon">📋</span> Copier
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="content-box full-width">
+                    <div class="box-header">
+                        <h2><span class="icon">📋</span> Données Enregistrées</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="dataTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Cote (m)</th>
+                                    <th>Surface (ha)</th>
+                                    <th>Volume (Hm³)</th>
+                                    <th>Gains (Hm³)</th>
+                                    <th>Évap. (Hm³)</th>
+                                    <th>VDF (Hm³)</th>
+                                    <th>DVR (Hm³)</th>
+                                    <th>Fuites (Hm³)</th>
+                                    <th>Transfert</th>
+                                    <th>Affluent</th>
+                                    <th>Défluent</th>
+                                    <th>Pluie (mm)</th>
+                                    <th>Bac (mm)</th>
+                                    <th>Taux (%)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination Controls -->
+                    <div class="pagination-controls" id="paginationControls">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+        </div>
+
+        <!-- Print Preview Modal -->
+        <div id="printModal" class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Aperçu avant impression</h2>
+                    <button class="modal-close" onclick="closePrintPreview()">&times;</button>
+                </div>
+                <div class="modal-body" id="printPreviewBody">
+                    <!-- Content will be injected here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closePrintPreview()">Annuler</button>
+                    <button class="btn btn-primary" onclick="confirmPrint()">🖨️ Imprimer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <script src="data.js"></script>
+        <script src="home.js"></script>
+</body>
+
+</html>
